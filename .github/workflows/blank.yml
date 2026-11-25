@@ -1,0 +1,37 @@
+
+import os
+
+files = {}
+folders = ["/"]
+current = "/"
+
+print("=== PC VIRTUAL ===")
+print("Digite help para ver os comandos.")
+
+while True:
+    cmd = input(f"{current}> ").strip().split(maxsplit=2)
+    if not cmd:
+        continue
+    action = cmd[0].lower()
+
+    if action == "help":
+        print("ls, mkdir, write, cat, rm, clear, exit")
+    elif action == "ls":
+        print("Arquivos:", list(files.keys()))
+        print("Pastas:", folders)
+    elif action == "mkdir" and len(cmd) > 1:
+        folders.append(current + cmd[1] + "/")
+    elif action == "write" and len(cmd) > 2:
+        files[current + cmd[1]] = cmd[2]
+    elif action == "cat" and len(cmd) > 1:
+        print(files.get(current + cmd[1], "Arquivo não encontrado"))
+    elif action == "rm" and len(cmd) > 1:
+        files.pop(current + cmd[1], None)
+    elif action == "clear":
+        os.system("cls" if os.name == "nt" else "clear")
+    elif action == "exit":
+        print("Desligando PC virtual...")
+        break
+    else:
+        print("Comando inválido!")
+        
